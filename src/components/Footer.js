@@ -1,10 +1,22 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 const Footer = () => {
-  return <h4>footer</h4>
-}
+  return (
+    <Wrapper>
+      <h5>
+        &copy; {new Date().getFullYear()}
+        <span>ComfySloth</span>
+      </h5>
+      <h5>All rights reserved</h5>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.footer`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   height: 5rem;
   display: flex;
   flex-direction: column;
@@ -26,6 +38,6 @@ const Wrapper = styled.footer`
   @media (min-width: 776px) {
     flex-direction: row;
   }
-`
+`;
 
-export default Footer
+export default Footer;
