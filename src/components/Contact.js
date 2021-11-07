@@ -1,19 +1,49 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const Contact = () => {
-  return <h4>contact section</h4>
-}
+  return (
+    <Wrapper className="section-center">
+      <h3>Join our newsletter and get 20% off</h3>
+      <div className="content">
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid
+          optio iure eum laudantium expedita veniam nisi odio, sint distinctio
+          quasi porro voluptas qui voluptatem fugiat!
+        </p>
+        <form
+          action="https://formspree.io/f/xleayaoa"
+          className="contact-form"
+          method="post"
+        >
+          <input
+            type="email"
+            name="_replyto"
+            placeholder="enter your email"
+            className="form-input"
+            id=""
+          />
+          <button type="submit" className="submit-btn">
+            subscribe
+          </button>
+        </form>
+      </div>
+    </Wrapper>
+  );
+};
 const Wrapper = styled.section`
   padding: 5rem 0;
+
   h3 {
     text-transform: none;
   }
+
   p {
     line-height: 2;
     max-width: 45em;
     color: var(--clr-grey-5);
   }
+
   .contact-form {
     width: 90vw;
     max-width: 500px;
@@ -67,6 +97,6 @@ const Wrapper = styled.section`
   @media (min-width: 1280px) {
     padding: 15rem 0;
   }
-`
+`;
 
-export default Contact
+export default Contact;

@@ -15,6 +15,10 @@ import {
 
 const initialState = {
   isSidebarOpen: false,
+  productsLoading: false,
+  productsError: false,
+  products: [],
+  featuredProducts: [],
 };
 
 const ProductsContext = React.createContext();
@@ -33,6 +37,22 @@ export const ProductsProvider = ({ children }) => {
       type: SIDEBAR_CLOSE,
     });
   };
+
+  // fetch product from api
+  const fetchProduct = async (url) => {
+    dispatch({ type: GET_PRODUCTS_BEGIN });
+    try {
+      const res = await axios.get(url);
+      const products = res.data;
+      dispatch({ type: GET_PRODUCTS_SUCCESS, payload: { data: products } });
+    } catch (error) {
+      dispatch({ type: GET_PRODUCTS_ERROR });
+    }
+  };
+
+  useEffect(() => {
+    fetchProduct(url);
+  }, []);
 
   /* to invoke the openSidebar function, useEffect to test out the dispatched actions
   useEffect(() => {
