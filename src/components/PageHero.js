@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link, useRouteMatch } from "react-router-dom";
 
-const PageHero = () => {
+const PageHero = ({ product }) => {
   const { path } = useRouteMatch();
   // console.log(path);
   const currentPage = path.split("/")[1];
@@ -12,7 +12,9 @@ const PageHero = () => {
     <Wrapper>
       <div className="section-center">
         <h3>
-          <Link to="/">Home</Link> / {currentPage}
+          <Link to="/">Home</Link> /
+          {product && <Link to="/products">Products</Link>}
+          {product ? `/ ${product.name}` : currentPage}
         </h3>
       </div>
     </Wrapper>

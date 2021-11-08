@@ -1,6 +1,10 @@
-import React from 'react'
+import React from "react";
 const Error = () => {
-  return <h4>error element</h4>
-}
+  return (
+    <div className="fullpage section section-center text-center">
+      <h2>Error in fetching products...</h2>
+    </div>
+  );
+};
 
-export default Error
+export default Error;

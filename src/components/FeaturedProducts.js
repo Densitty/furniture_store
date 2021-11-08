@@ -7,7 +7,38 @@ import Loading from "./Loading";
 import Product from "./Product";
 
 const FeaturedProducts = () => {
-  return <Wrapper className="section-center">featured products</Wrapper>;
+  const {
+    productsLoading: loading,
+    productsError: error,
+    featuredProducts: featured,
+  } = useProductsContext();
+
+  console.log(featured);
+  // console.log(loading);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error />;
+  }
+
+  return (
+    <Wrapper className="section">
+      <div className="text-center">
+        <h2>featured products</h2>
+        <div className="underline"></div>
+      </div>
+
+      <div className="section-center featured">
+        {featured.map((product) => {
+          // console.log(product);
+          return <Product key={product.id} {...product} />;
+        })}
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`

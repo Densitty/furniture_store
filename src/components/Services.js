@@ -11,9 +11,8 @@ const Services = () => {
             custom furniture <br /> built only for you
           </h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
-            iure iste officia quis inventore modi odio aliquid deleniti
-            blanditiis quisquam.
+            You choose from wide array of products or you specify your need and
+            we make it available for you
           </p>
         </article>
 
