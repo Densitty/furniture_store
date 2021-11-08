@@ -82,18 +82,20 @@ const SingleProductPage = () => {
             <h5 className="price">{formatPrice(price)}</h5>
             <p className="description">{description}</p>
             <p className="info">
-              <span>Available : {stock > 0 ? "In stock" : "Out of stock"}</span>
+              <span>Available : </span>
+              {stock > 0 ? "In stock" : "Out of stock"}
             </p>
             <p className="info">
-              <span>SKU: {sku}</span>
+              <span>SKU:</span> {sku}
             </p>
             <p className="info">
-              <span>Brand : {company}</span>
+              <span>Brand:</span> {company}
             </p>
 
             <hr />
 
-            {stock > 0 && <AddToCart />}
+            {/* only show the AddToCart component if stock is at least 1 qty */}
+            {stock > 0 && <AddToCart product={product} />}
           </section>
         </div>
       </div>
