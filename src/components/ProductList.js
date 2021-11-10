@@ -1,10 +1,26 @@
-import React from 'react'
-import { useFilterContext } from '../context/filter_context'
-import GridView from './GridView'
-import ListView from './ListView'
+import React from "react";
+import { useFilterContext } from "../context/filter_context";
+import GridView from "./GridView";
+import ListView from "./ListView";
 
 const ProductList = () => {
-  return <h4>product list</h4>
-}
+  const data = useFilterContext();
+  const { filteredProducts: products, gridView } = data;
 
-export default ProductList
+  if (products.length < 1) {
+    // by default, filteredProducts from state is an empy [] until data is passed to it
+    return (
+      <h5 style={{ textTransform: "none" }}>
+        Sorry, no products matched your search ...
+      </h5>
+    );
+  }
+
+  if (!gridView) {
+    return <ListView products={products} />;
+  }
+
+  return <GridView products={products}>product list</GridView>;
+};
+
+export default ProductList;
