@@ -17,6 +17,16 @@ const initialState = {
   allProducts: [],
   gridView: true,
   sort: "price-lowest",
+  filters: {
+    text: "",
+    company: "all",
+    category: "all",
+    color: "all",
+    minPrice: 0,
+    maxPrice: 0,
+    actualPrice: 0,
+    shipping: false,
+  },
 };
 
 const FilterContext = React.createContext();
@@ -59,9 +69,55 @@ export const FilterProvider = ({ children }) => {
     dispatch({ type: UPDATE_SORT, payload: { data: value } });
   };
 
+  const updateFilters = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+
+    /* 3 elements trigger updateFilters, <input/> and <button/> & <select></select>. Button does not have value attr, input & option inside select have, in order to cater for the name attribute on a btn to assign the textContent to the name ppty (another approach is to use <input type='button')> instead of <button> */
+    if (name === "category") {
+      value = e.target.textContent;
+    }
+
+    // for the color buttons, approach for category didn't work because it doesn't have a textContent, just background-color; hence approach of using a data-property
+    if (name === "color") {
+      value = e.target.dataset.color;
+    }
+
+    /* to convert the value from the range input to a number */
+    if (name === "actualPrice") {
+      value = Number(value);
+    }
+
+    /* to get the checked status for a checked input */
+    if (name === "shipping") {
+      value = e.target.checked;
+    }
+
+    // to get the text value typed into <input />, pass name & value into dispatch and use dynamic values to assign value to name (just as it's done in useState)
+    dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
+  };
+
+  /* on changing the state value of filters.text as we are typing inside the <input />, reload the component to effect the products displayed */
+  useEffect(() => {
+    dispatch({ type: FILTER_PRODUCTS });
+
+    /* anytime any of the state value of filters obj change, trigger component re-rendering */
+  }, [state.filters]);
+
+  const clearFilters = (e) => {
+    dispatch({ type: CLEAR_FILTERS });
+  };
+
   return (
     <FilterContext.Provider
-      value={{ ...state, showProductsInGrid, showProductsInList, updateSort }}
+      value={{
+        ...state,
+        showProductsInGrid,
+        showProductsInList,
+        updateSort,
+        updateFilters,
+        clearFilters,
+      }}
     >
       {children}
     </FilterContext.Provider>

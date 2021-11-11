@@ -8,7 +8,7 @@ const ProductList = () => {
   const { filteredProducts: products, gridView } = data;
 
   if (products.length < 1) {
-    // by default, filteredProducts from state is an empy [] until data is passed to it
+    // by default, filteredProducts from state is an empty [] until data is passed to it via api request
     return (
       <h5 style={{ textTransform: "none" }}>
         Sorry, no products matched your search ...

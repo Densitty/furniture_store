@@ -13,10 +13,25 @@ const filter_reducer = (state, action) => {
   switch (action.type) {
     case LOAD_PRODUCTS:
       // console.log(action.payload);
+      // get the max price
+      const productPrices = action.payload.data.map((product) => {
+        // console.log(product);
+        return product.price;
+      });
+      // to get the max of the prices in maxPrice, spread the values of the maxPrice [] & run Math.max() on it
+      const max_price = Math.max(...productPrices);
+      const min_price = Math.min(...productPrices);
+
       return {
         ...state,
         allProducts: [...action.payload.data],
         filteredProducts: [...action.payload.data], // copy the data so as to get the default product
+        filters: {
+          ...state.filters,
+          maxPrice: max_price,
+          minPrice: min_price,
+          actualPrice: max_price,
+        },
       };
 
     case SET_GRIDVIEW:
@@ -32,7 +47,7 @@ const filter_reducer = (state, action) => {
       };
 
     case UPDATE_SORT:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         sort: action.payload.data,
@@ -79,6 +94,95 @@ const filter_reducer = (state, action) => {
       return {
         ...state,
         filteredProducts: temp,
+      };
+
+    case UPDATE_FILTERS:
+      const { name, value } = action.payload;
+
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          [name]: value,
+        },
+      };
+
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          text: "",
+          company: "all",
+          category: "all",
+          color: "all",
+          actualPrice: state.filters.maxPrice,
+          shipping: false,
+        },
+      };
+
+    case FILTER_PRODUCTS:
+      // console.log("filtering products");
+      const { allProducts } = state;
+      const {
+        text,
+        category,
+        company,
+        color,
+        shipping,
+        actualPrice,
+        maxPrice,
+        minPrice,
+      } = state.filters;
+
+      // console.log(state);
+
+      let tempProducts = [...allProducts];
+
+      // filtereing stages
+      if (text) {
+        tempProducts = tempProducts.filter((product) => {
+          return product.name
+            .toLowerCase()
+            .startsWith(text.trim().toLowerCase());
+        });
+      }
+
+      if (category !== "all") {
+        tempProducts = tempProducts.filter((product) => {
+          return product.category.toLowerCase() === category.toLowerCase();
+        });
+      }
+
+      if (company !== "all") {
+        tempProducts = tempProducts.filter((product) => {
+          return product.company.toLowerCase() === company.toLowerCase();
+        });
+      }
+
+      if (color !== "all") {
+        tempProducts = tempProducts.filter((product) => {
+          return product.colors.includes(color);
+        });
+      }
+
+      if (actualPrice > 0) {
+        tempProducts = tempProducts.filter((product) => {
+          return product.price <= actualPrice;
+        });
+      }
+
+      if (shipping) {
+        tempProducts = tempProducts.filter((product) => {
+          return product.shipping;
+        });
+      }
+
+      // console.log(tempProducts);
+
+      return {
+        ...state,
+        filteredProducts: tempProducts,
       };
 
     default:

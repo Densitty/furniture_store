@@ -1,12 +1,173 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useFilterContext } from '../context/filter_context'
-import { getUniqueValues, formatPrice } from '../utils/helpers'
-import { FaCheck } from 'react-icons/fa'
+import React from "react";
+import styled from "styled-components";
+import { useFilterContext } from "../context/filter_context";
+import { getUniqueValues, formatPrice } from "../utils/helpers";
+import { FaCheck } from "react-icons/fa";
 
 const Filters = () => {
-  return <h4>filters</h4>
-}
+  const data = useFilterContext();
+  const {
+    filters: {
+      actualPrice,
+      category,
+      color,
+      company,
+      maxPrice,
+      minPrice,
+      shipping,
+      text,
+    },
+    updateFilters,
+    clearFilters,
+    allProducts,
+  } = data;
+
+  // console.log(data);
+
+  /* to get the category, company and colors properties of each product, run the getUniqueValues function */
+  const categories = getUniqueValues(allProducts, "category");
+  const companies = getUniqueValues(allProducts, "company");
+  const colors = getUniqueValues(allProducts, "colors");
+
+  // console.log({ categories, companies, colors });
+
+  return (
+    <Wrapper>
+      <div className="content">
+        <form action="" onSubmit={(e) => e.preventDefault()}>
+          {/* search input */}
+          <div className="form-control">
+            <input
+              type="text"
+              name="text"
+              placeholder="search "
+              className="search-input"
+              value={text}
+              onChange={updateFilters}
+            />
+          </div>
+          {/* end of search input */}
+
+          {/* categories */}
+          <div>
+            <h5>category</h5>
+            {categories.map((c) => {
+              return (
+                <button
+                  key={c}
+                  type="button"
+                  name="category"
+                  className={`${
+                    category.toLowerCase() === c.toLowerCase() ? "active" : null
+                  }`}
+                  onClick={updateFilters}
+                >
+                  {c}
+                </button>
+              );
+            })}
+          </div>
+          {/* categories end */}
+
+          {/* companies */}
+          <div className="form-control">
+            <h5>company</h5>
+            <select
+              name="company"
+              id=""
+              value={company}
+              onChange={updateFilters}
+              className="company"
+            >
+              {companies.map((company) => {
+                return (
+                  <option key={company} value={company}>
+                    {company}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          {/* end of companies */}
+
+          {/* colors */}
+          <div className="form-control">
+            <h5>colors</h5>
+            <div className="colors">
+              {colors.map((c, index) => {
+                if (c === "all") {
+                  return (
+                    <button
+                      name="color"
+                      key={color}
+                      onClick={updateFilters}
+                      data-color="all"
+                      className={`${
+                        color === "all" ? "all-btn active" : "all-btn"
+                      }`}
+                    >
+                      all
+                    </button>
+                  );
+                }
+
+                return (
+                  <button
+                    key={index}
+                    name="color"
+                    style={{ background: c }}
+                    className={`${
+                      color === c ? "color-btn active" : "color-btn"
+                    }`}
+                    data-color={c} /* set a data attribute */
+                    onClick={updateFilters}
+                  >
+                    {color === c ? <FaCheck /> : null}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          {/* end of colors */}
+
+          {/* price */}
+          <div className="form-control">
+            <h4>price</h4>
+            <p className="price">{formatPrice(actualPrice)}</p>
+            <input
+              type="range"
+              name="actualPrice"
+              onChange={updateFilters}
+              min={minPrice}
+              max={maxPrice}
+              value={actualPrice}
+            />
+          </div>
+          {/* end of price */}
+
+          {/* shipping */}
+          <div className="form-control shipping">
+            <label htmlFor="shipping">free shipping</label>
+            <input
+              type="checkbox"
+              name="shipping"
+              id="shipping"
+              onChange={updateFilters}
+              value={shipping}
+              checked={shipping}
+            />
+          </div>
+          {/* end of shipping */}
+        </form>
+
+        {/* clear filters button */}
+        <button className="clear-btn" type="button" onClick={clearFilters}>
+          clear filters
+        </button>
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   .form-control {
@@ -15,6 +176,7 @@ const Wrapper = styled.section`
       margin-bottom: 0.5rem;
     }
   }
+
   .search-input {
     padding: 0.5rem;
     background: var(--clr-grey-10);
@@ -22,6 +184,7 @@ const Wrapper = styled.section`
     border-color: transparent;
     letter-spacing: var(--spacing);
   }
+
   .search-input::placeholder {
     text-transform: capitalize;
   }
@@ -38,19 +201,23 @@ const Wrapper = styled.section`
     color: var(--clr-grey-5);
     cursor: pointer;
   }
+
   .active {
     border-color: var(--clr-grey-5);
   }
+
   .company {
     background: var(--clr-grey-10);
     border-radius: var(--radius);
     border-color: transparent;
     padding: 0.25rem;
   }
+
   .colors {
     display: flex;
     align-items: center;
   }
+
   .color-btn {
     display: inline-block;
     width: 1rem;
@@ -69,6 +236,7 @@ const Wrapper = styled.section`
       color: var(--clr-white);
     }
   }
+
   .all-btn {
     display: flex;
     align-items: center;
@@ -76,15 +244,19 @@ const Wrapper = styled.section`
     margin-right: 0.5rem;
     opacity: 0.5;
   }
+
   .active {
     opacity: 1;
   }
+
   .all-btn .active {
     text-decoration: underline;
   }
+
   .price {
     margin-bottom: 0.25rem;
   }
+
   .shipping {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -93,18 +265,20 @@ const Wrapper = styled.section`
     column-gap: 0.5rem;
     font-size: 1rem;
   }
+
   .clear-btn {
     background: var(--clr-red-dark);
     color: var(--clr-white);
     padding: 0.25rem 0.5rem;
     border-radius: var(--radius);
   }
+
   @media (min-width: 768px) {
     .content {
       position: sticky;
       top: 1rem;
     }
   }
-`
+`;
 
-export default Filters
+export default Filters;
