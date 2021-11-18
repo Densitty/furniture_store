@@ -12,14 +12,14 @@ import {
 const products_reducer = (state, action) => {
   switch (action.type) {
     case SIDEBAR_OPEN:
-      console.log(action);
+      // console.log(action);
       return {
         ...state,
         isSidebarOpen: true,
       };
 
     case SIDEBAR_CLOSE:
-      console.log(action);
+      // console.log(action);
       return {
         ...state,
         isSidebarOpen: false,
