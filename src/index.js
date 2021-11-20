@@ -12,13 +12,13 @@ import { Auth0Provider } from "@auth0/auth0-react";
 
 /* 
 Domain: dev-h407upiu.us.auth0.com
-Client ID: zQHBlkKNiAlANv8m0AaqWt8c6X1HRQEH
+Client ID: W689dBuDWFshwoPfFAAHy290Sui3m7Lx
 */
 
 ReactDOM.render(
   <Auth0Provider
     domain="dev-h407upiu.us.auth0.com"
-    clientID="zQHBlkKNiAlANv8m0AaqWt8c6X1HRQEH"
+    clientId="W689dBuDWFshwoPfFAAHy290Sui3m7Lx"
     redirectUri={window.location.origin}
     cacheLocation="localstorage"
   >
@@ -32,6 +32,5 @@ ReactDOM.render(
       </ProductsProvider>
     </UserProvider>
   </Auth0Provider>,
-
   document.getElementById("root")
 );
