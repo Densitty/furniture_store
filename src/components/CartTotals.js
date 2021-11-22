@@ -9,6 +9,8 @@ const CartTotals = () => {
   const cartData = useCartContext();
   const { shippingFee, tax, totalAmount } = cartData;
 
+  const { myUser, loginWithRedirect } = useUserContext();
+
   return (
     <Wrapper>
       <div>
@@ -30,9 +32,15 @@ const CartTotals = () => {
             </span>
           </h4>
         </article>
-        <Link to="/checkout" className="btn">
-          proceed to checkout
-        </Link>
+        {myUser ? (
+          <Link to="/checkout" className="btn">
+            proceed to checkout
+          </Link>
+        ) : (
+          <button type="button" className="btn" onClick={loginWithRedirect}>
+            login
+          </button>
+        )}
       </div>
     </Wrapper>
   );
@@ -42,10 +50,6 @@ const Wrapper = styled.section`
   margin-top: 3rem;
   display: flex;
   justify-content: center;
-
-  div {
-    width: 100%;
-  }
 
   article {
     border: 1px solid var(--clr-grey-8);
@@ -78,6 +82,24 @@ const Wrapper = styled.section`
     margin-top: 1rem;
     text-align: center;
     font-weight: 700;
+  }
+
+  @media (max-width: 370px) {
+    div {
+      width: 100%;
+
+      article {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .btn {
+        width: 100%;
+        margin-top: 1rem;
+        text-align: center;
+        font-weight: 700;
+      }
+    }
   }
 `;
 

@@ -12,9 +12,9 @@ const PageHero = ({ product }) => {
     <Wrapper>
       <div className="section-center">
         <h3>
-          <Link to="/">Home</Link> /
+          <Link to="/">Home</Link>/
           {product && <Link to="/products">Products</Link>}
-          {product ? `/ ${product.name}` : currentPage}
+          {product ? `/${product.name}` : ` ${currentPage}`}
         </h3>
       </div>
     </Wrapper>

@@ -114,10 +114,9 @@ const cart_reducer = (state, action) => {
               amount: newAmount,
             };
           }
-        } else {
-          // if the id of the item is not in the cart, return the whole cart
-          return cartItem;
         }
+        // if the id of the item is not in the cart, return the whole cart
+        return cartItem;
       });
 
       return {

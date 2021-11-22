@@ -51,6 +51,11 @@ const Wrapper = styled.article`
   margin-bottom: 3rem;
   align-items: center;
 
+  @media (max-width: 370px) {
+    grid-template-columns: 190px 40px 40px;
+    gap: 3rem 0.7rem;
+  }
+
   .subtotal {
     display: none;
   }

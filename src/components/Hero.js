@@ -7,7 +7,7 @@ import heroBcg2 from "../assets/hero-bcg-2.jpeg";
 const Hero = () => {
   return (
     <Wrapper className="section-center">
-      <article className="content">
+      <article className="">
         <h1>
           Design your <br />
           comfort zone{" "}

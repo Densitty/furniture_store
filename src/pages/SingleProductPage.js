@@ -32,6 +32,8 @@ const SingleProductPage = () => {
   // when page/component loads, fetch the product
   useEffect(() => {
     fetchSingleProduct(`${url}${id}`);
+
+    // eslint-disable-next-line
   }, [id]);
 
   // if there is an error, programmatcally push to homepage
@@ -43,6 +45,7 @@ const SingleProductPage = () => {
     }
 
     // error must be passed as a dependency for the page to reload if error state changes
+    // eslint-disable-next-line
   }, [error]);
 
   if (loading) {

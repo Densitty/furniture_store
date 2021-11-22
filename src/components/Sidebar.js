@@ -12,6 +12,8 @@ const Sidebar = () => {
   // query the useProductsContext to access the sidebar state & fxns
   const { isSidebarOpen, closeSidebar } = useProductsContext();
 
+  const { myUser } = useUserContext();
+
   return (
     <SidebarContainer>
       <aside
@@ -35,9 +37,11 @@ const Sidebar = () => {
             );
           })}
           <li>
-            <Link to="/checkout" onClick={closeSidebar}>
-              checkout
-            </Link>
+            {myUser && (
+              <Link to="/checkout" onClick={closeSidebar}>
+                checkout
+              </Link>
+            )}
           </li>
         </ul>
 

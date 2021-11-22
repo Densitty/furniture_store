@@ -124,16 +124,8 @@ const filter_reducer = (state, action) => {
     case FILTER_PRODUCTS:
       // console.log("filtering products");
       const { allProducts } = state;
-      const {
-        text,
-        category,
-        company,
-        color,
-        shipping,
-        actualPrice,
-        maxPrice,
-        minPrice,
-      } = state.filters;
+      const { text, category, company, color, shipping, actualPrice } =
+        state.filters;
 
       // console.log(state);
 
