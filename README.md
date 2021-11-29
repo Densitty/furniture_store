@@ -1,12 +1,8 @@
 ## Notes
 
-#### Older React Version
+Furniture Store E-commerce website using React, Context API, Stripe and the Netlify Serverless functionality.
 
-```
-"react": "^16.13.1",
-"react-dom": "^16.13.1",
-"react-scripts": "3.4.3",
-```
+#### Older React Version
 
 #### Current React Version
 
